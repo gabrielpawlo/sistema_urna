@@ -101,7 +101,136 @@ public class Urna {
         System.out.println("Candidato registrado!");
     }
 
-    private void iniciarVotacao(){}
-    private void confirmarVoto(){}
-    private void encerrarEleicao(){}
+    private void iniciarVotacao() {
+
+    for (Cargo cargo : cargos) {
+
+        while (true) {
+
+            System.out.println("\n------Urna Eletronica---------");
+            System.out.println("Processo de eleicao para o cargo de " + cargo.getNome());
+            System.out.println("Candidatos:");
+
+            for (Candidato c : cargo.getCandidatos()) {
+                System.out.println(c.getNumero() + " - " + c.getNome());
+            }
+
+            System.out.println("000 - BRANCO");
+            System.out.println("111 - CORRIGE");
+
+            System.out.print("Insira seu voto: ");
+            int voto = ler.nextInt();
+
+            // ENCERRA ELEIÇÃO
+            if (voto == 999) {
+                encerrarEleicao();
+                return;
+            }
+
+            // VOTO BRANCO
+            if (voto == 000) {
+
+                System.out.println("Voce esta votando BRANCO");
+                if (confirmar()) {
+                    cargo.votarBranco();
+                    System.out.println("Voto registrado");
+                    break;
+                }
+
+                continue;
+            }
+
+            // BUSCA CANDIDATO
+            Candidato candidato = cargo.buscarCandidato(voto);
+
+            if (candidato != null) {
+
+                System.out.println("Voce esta votando " +
+                        candidato.getNumero() + " - " + candidato.getNome());
+
+                if (confirmar()) {
+                    candidato.adicionarVoto();
+                    System.out.println("Voto registrado");
+                    break;
+                }
+
+            } else {
+
+                System.out.println("Voce este votando NULO");
+
+                if (confirmar()) {
+                    cargo.votarNulo();
+                    System.out.println("Voto registradoe");
+                    break;
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean confirmar() {
+        System.out.println("\nAperte a tecla:");
+        System.out.println("CONFIRMA (2) para CONFIRMAR este voto");
+        System.out.println("CORRIGE (1) para REINICIAR este voto");
+
+        int opcao = ler.nextInt();
+        ler.nextLine(); // limpa o buffer
+
+        if (opcao == 2) {
+            return true;
+        }
+
+        System.out.println("Voto reiniciado!");
+        return false;
+    }
+
+    private void confirmarVoto(Cargo cargo, Candidato candidato, String tipo){
+        System.out.println("\n2 - CONFIRMA");
+        System.out.println("1 - CORRIGE");
+
+        int opcao = ler.nextInt();
+        ler.nextLine();
+
+        if (opcao == 1) {
+            System.out.println("Voto reiniciado");
+            return;
+        }
+
+        if (opcao == 2) {
+
+            if (tipo.equals("BRANCO")) {
+                cargo.votarBranco();
+            }
+
+            else if (tipo.equals("NULO")) {
+                cargo.votarNulo();
+            }
+
+            else {
+                candidato.adicionarVoto();
+            }
+
+            System.out.println("Voto registrado!");
+        }
+    }
+
+
+    private void encerrarEleicao(){
+        System.out.println("\nELEICAO ENCERRADA");
+        System.out.println("Gerando resultados\n");
+
+        for (Cargo cargo : cargos) {
+
+            System.out.println(" - Cargo " + cargo.getNome() + " -");
+
+            for (Candidato c : cargo.getCandidatos()) {
+                System.out.println(c.getVotos() + " - " + c.getNome());
+            }
+
+            System.out.println(cargo.getVotosBrancos() + " - BRANCO");
+            System.out.println(cargo.getVotosNulos() + " - NULO\n");
+        }
+    
+    }
+    
 }

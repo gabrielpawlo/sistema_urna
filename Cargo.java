@@ -25,8 +25,7 @@ public class Cargo {
     public void adicionarCandidato(Candidato c) {
         candidatos.add(c);
     }
-    //colocar excecao 
-    //caso colocar numero que nao existe
+
     public Candidato buscarCandidato(int numero) {
         for (Candidato c : candidatos) {
             if (c.getNumero() == numero) {
