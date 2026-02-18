@@ -4,31 +4,51 @@ public class Cargo {
 
     private String nome;
     private ArrayList<Candidato> candidatos;
+    private int votosBrancos;
+    private int votosNulos;
 
-    public Cargo(String nome){
+    public Cargo(String nome) {
         this.nome = nome;
         candidatos = new ArrayList<>();
+        votosBrancos = 0;
+        votosNulos = 0;
     }
 
-    public void adicionarCandidato(Candidato c){
+    public String getNome() {
+        return nome;
+    }
+
+    public ArrayList<Candidato> getCandidatos() {
+        return candidatos;
+    }
+
+    public void adicionarCandidato(Candidato c) {
         candidatos.add(c);
     }
-
-    //DENTRO DO BUSCAR CANDIDATO
-    //TEM QUE TRATAR A EXCECAO CASO NAO ENCONTRE NENHUM NUMERO
-    public Candidato buscarCandidato(int numero){
-        for (Candidato candidato : candidatos) {
-            if(candidato.getNumero() == numero)
-                return candidato;
+    //colocar excecao 
+    //caso colocar numero que nao existe
+    public Candidato buscarCandidato(int numero) {
+        for (Candidato c : candidatos) {
+            if (c.getNumero() == numero) {
+                return c;
+            }
         }
         return null;
     }
 
-    public String getNome(){
-        return this.nome;
+    public void votarBranco() {
+        votosBrancos++;
     }
 
-    public ArrayList<Candidato> getCandidatos(){
-        return candidatos;
+    public void votarNulo() {
+        votosNulos++;
+    }
+
+    public int getVotosBrancos() {
+        return votosBrancos;
+    }
+
+    public int getVotosNulos() {
+        return votosNulos;
     }
 }
