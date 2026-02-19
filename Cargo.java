@@ -8,7 +8,14 @@ public class Cargo {
     private int votosNulos;
 
     public Cargo(String nome) {
-        this.nome = nome;
+        try {
+            if (nome == null || nome.trim().isEmpty()) {
+                throw new IllegalArgumentException();
+            }
+            this.nome = nome;
+        } catch (IllegalArgumentException e) {
+            this.nome = "Indefinido";
+        }
         candidatos = new ArrayList<>();
         votosBrancos = 0;
         votosNulos = 0;
@@ -23,14 +30,28 @@ public class Cargo {
     }
 
     public void adicionarCandidato(Candidato c) {
-        candidatos.add(c);
+        try {
+            if (c == null) {
+                throw new IllegalArgumentException();
+            }
+            candidatos.add(c);
+        } catch (IllegalArgumentException e) {
+        }
     }
 
-    public Candidato buscarCandidato(int numero) {
-        for (Candidato c : candidatos) {
-            if (c.getNumero() == numero) {
-                return c;
+    //FALTA TRATAMENTO DE EXCECAO (numero invalido)
+    //tratei
+    public Candidato buscarCandidato(String numero) {
+        try {
+            if (numero == null || numero.trim().isEmpty()) {
+                throw new IllegalArgumentException();
             }
+            for (Candidato c : candidatos) {
+                if (c.getNumero().equals(numero)) {
+                    return c;
+                }
+            }
+        } catch (IllegalArgumentException e) {
         }
         return null;
     }
@@ -51,3 +72,4 @@ public class Cargo {
         return votosNulos;
     }
 }
+//talvez tenha muita tratacao de excecao

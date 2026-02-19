@@ -1,12 +1,23 @@
 public class Candidato {
 
     private String nome;
-    private int numero;
+    private String numero;
     private int votos;
 
-    public Candidato(String nome, int numero) {
-        this.nome = nome;
-        this.numero = numero;
+
+    //adicionar .trim para remover espacos em branco da string
+    //.trim + tratamento
+    public Candidato(String nome, String numero) {
+        try {
+            if (nome == null || nome.trim().isEmpty() || numero == null || numero.trim().isEmpty()) {
+                throw new IllegalArgumentException();
+            }
+            this.nome = nome;
+            this.numero = numero;
+        } catch (IllegalArgumentException e) {
+            this.nome = "Indefinido";
+            this.numero = "0";
+        }
         this.votos = 0;
     }
 
@@ -14,7 +25,7 @@ public class Candidato {
         return nome;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
@@ -23,7 +34,9 @@ public class Candidato {
     }
 
     public void adicionarVoto() {
-        votos++;
+        try {
+            votos++;
+        } catch (Exception e) {
+        }
     }
 }
-
