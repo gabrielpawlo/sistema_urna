@@ -81,20 +81,47 @@ public class Urna {
             System.out.println((i + 1) + " - " + cargos.get(i).getNome());
         }
 
-        int escolha = ler.nextInt();
-        ler.nextLine();
+        int escolha;
+
+        while (true) {
+            try {
+                escolha = ler.nextInt();
+                ler.nextLine();
+
+                if (escolha < 1 || escolha > cargos.size()) {
+                    throw new IllegalArgumentException();
+                }
+
+                break;
+
+            } catch (IllegalArgumentException e) {
+                System.out.println("Entrada invalida! Digite um numero entre 1 e " + cargos.size());
+            } catch (Exception e) {
+                System.out.println("Entrada invalida! Digite apenas numeros.");
+                ler.nextLine();
+            }
+        }
 
         Cargo cargo = cargos.get(escolha - 1);
 
         System.out.print("Digite o nome do candidato: ");
         String nome = ler.nextLine();
 
-        System.out.print("Digite o número (3 dígitos, diferente de 999): ");
-        String numero = ler.nextLine();
+        String numero;
 
-        if (numero.equals("999") || numero.length() != 3) {
-            System.out.println("Número inválido!");
-            return;
+        while (true) {
+            System.out.print("Digite o número (3 digitos): ");
+            numero = ler.nextLine();
+
+            if (!numero.matches("\\d{3}") ||
+                numero.equals("000") ||
+                numero.equals("111") ||
+                numero.equals("999")) {
+
+                System.out.println("Número invalido! Nao pode ser 000, 111 ou 999 e deve conter apenas 3 digitos.");
+            } else {
+                break;
+            }
         }
 
         cargo.adicionarCandidato(new Candidato(nome, numero));
@@ -117,7 +144,6 @@ public class Urna {
                 }
 
                 System.out.println("000 - BRANCO");
-                System.out.println("111 - CORRIGE");
 
                 System.out.print("Insira seu voto: ");
                 String voto = ler.nextLine();
