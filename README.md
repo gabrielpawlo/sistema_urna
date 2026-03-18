@@ -24,8 +24,3 @@ O sistema foi modelado para refletir entidades do mundo real:
    * Voto Nulo (números não cadastrados).
    * Confirmação ou correção de voto.
 4. **Apuração Final:** Relatório detalhado de votos por candidato e cargo após o encerramento (código 999).
-
-## 🛠️ Como Executar
-1. Clone o repositório:
-   ```bash
-   git clone [https://github.com/gabrielpawlo/NOME_DO_REPOSITORIO.git](https://github.com/gabrielpawlo/NOME_DO_REPOSITORIO.git)
